@@ -30,6 +30,7 @@ def context(request):
     }
     return render(request, "mainapp/text_context.html", context)
 
+
 def menu(request):
     links_menu = [
         {'href': 'products_all', 'name': 'все'},
