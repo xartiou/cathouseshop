@@ -1,7 +1,25 @@
+import os.path
+
 from django.shortcuts import render
 
 
 # Create your views here.
+module_dir = os.path.dirname(__file__,)
+
+links_menu = [
+        {'href': 'products_all', 'name': 'все'},
+        {'href': 'products_home', 'name': 'дом'},
+        {'href': 'products_office', 'name': 'офис'},
+        {'href': 'products_modern', 'name': 'модерн'},
+        {'href': 'products_classic', 'name': 'классика'},
+    ]
+
+menu = [
+    {'href': 'index', 'name': 'главная'},
+    {'href': 'products', 'name': 'продукты'},
+    {'href': 'contact', 'name': 'контакты'},
+]
+
 def index(request):
     menu = {'title': 'cathouseshop'}
     return render(request, "mainapp/index.html", menu)
