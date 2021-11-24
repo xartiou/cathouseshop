@@ -1,60 +1,64 @@
-import os.path
-
+import os
 from django.shortcuts import render
 
-
 # Create your views here.
-module_dir = os.path.dirname(__file__,)
+module_dir = os.path.dirname(__file__, )
 
-links_menu = [
-        {'href': 'products_all', 'name': 'все'},
-        {'href': 'products_home', 'name': 'дом'},
-        {'href': 'products_office', 'name': 'офис'},
-        {'href': 'products_modern', 'name': 'модерн'},
-        {'href': 'products_classic', 'name': 'классика'},
-    ]
-
-menu = [
-    {'href': 'index', 'name': 'главная'},
-    {'href': 'products', 'name': 'продукты'},
-    {'href': 'contact', 'name': 'контакты'},
-]
 
 def index(request):
-    menu = {'title': 'cathouseshop'}
+    menu = {'title': 'Главная'}
     return render(request, "mainapp/index.html", menu)
 
 
+links_menu = [
+    {'url': 'products', 'title': 'все'},
+    {'url': 'products_home', 'title': 'дом'},
+    {'url': 'products_office', 'title': 'офис'},
+    {'url': 'products_modern', 'title': 'модерн'},
+    {'url': 'products_classic', 'title': 'классика'},
+]
+
+
 def products(request):
-    menu = {'title': 'cathouseshop'}
-    return render(request, "mainapp/products.html", menu)
+    context = {
+        'links_menu': links_menu,
+        'title': 'продукты'
+    }
+    return render(request, "mainapp/products.html", context)
+
+
+def products_home(request):
+    context = {
+        'links_menu': links_menu,
+        'title': 'дом'
+    }
+    return render(request, "mainapp/products.html", context)
+
+
+def products_office(request):
+    context = {
+        'links_menu': links_menu,
+        'title': 'офис'
+    }
+    return render(request, "mainapp/products.html", context)
+
+
+def products_modern(request):
+    context = {
+        'links_menu': links_menu,
+        'title': 'модерн'
+    }
+    return render(request, "mainapp/products.html", context)
+
+
+def products_classic(request):
+    context = {
+        'links_menu': links_menu,
+        'title': 'классика'
+    }
+    return render(request, "mainapp/products.html", context)
 
 
 def contact(request):
-    menu = {'title': 'cathouseshop'}
+    menu = {'title': 'контакты'}
     return render(request, "mainapp/contact.html", menu)
-
-
-def context(request):
-    context = {
-        'title': 'test context',
-        'header': 'Добро пожаловать на сайт',
-        'username': 'juan',
-        'products': [
-            {'name': 'Стулья', 'price': 9999},
-            {'name': 'Диваны', 'price': 99999},
-            {'name': 'Столы', 'price': 19999}
-        ]
-    }
-    return render(request, "mainapp/text_context.html", context)
-
-
-def menu(request):
-    links_menu = [
-        {'href': 'products_all', 'name': 'все'},
-        {'href': 'products_home', 'name': 'дом'},
-        {'href': 'products_office', 'name': 'офис'},
-        {'href': 'products_modern', 'name': 'модерн'},
-        {'href': 'products_classic', 'name': 'классика'},
-    ]
-    return render(request, 'inc_categories_menu.html', links_menu)
