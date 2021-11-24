@@ -1,8 +1,9 @@
+import json
 import os
 from django.shortcuts import render
 
 # Create your views here.
-module_dir = os.path.dirname(__file__, )
+module_dir = os.path.dirname(__file__,)
 
 
 def index(request):
@@ -20,9 +21,13 @@ links_menu = [
 
 
 def products(request):
+    file_path = os.path.join(module_dir, 'fixtures/products.json')
+    products = json.load(open(file_path, encoding='utf-8'))
     context = {
         'links_menu': links_menu,
-        'title': 'продукты'
+        'title': 'продукты',
+        'products': products,
+
     }
     return render(request, "mainapp/products.html", context)
 
