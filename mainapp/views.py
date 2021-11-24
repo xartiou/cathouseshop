@@ -5,12 +5,6 @@ from django.shortcuts import render
 # Create your views here.
 module_dir = os.path.dirname(__file__,)
 
-
-def index(request):
-    menu = {'title': 'Главная'}
-    return render(request, "mainapp/index.html", menu)
-
-
 links_menu = [
     {'url': 'products', 'title': 'все'},
     {'url': 'products_home', 'title': 'дом'},
@@ -18,6 +12,19 @@ links_menu = [
     {'url': 'products_modern', 'title': 'модерн'},
     {'url': 'products_classic', 'title': 'классика'},
 ]
+
+
+menu = [
+    {'href': 'index', 'title': 'главная'},
+    {'href': 'products', 'title': 'продукты'},
+    {'href': 'contact', 'title': 'контакты'},
+
+]
+
+
+def index(request):
+    context = {'title': 'главная'}
+    return render(request, "mainapp/index.html", context)
 
 
 def products(request):
@@ -65,5 +72,5 @@ def products_classic(request):
 
 
 def contact(request):
-    menu = {'title': 'контакты'}
-    return render(request, "mainapp/contact.html", menu)
+    context = {'title': 'контакты'}
+    return render(request, "mainapp/contact.html", context)
