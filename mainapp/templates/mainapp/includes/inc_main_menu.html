@@ -3,7 +3,7 @@
             class="active"
        {% endif%}>домой</a>
 </li>
-<li><a href="{% url 'products' %}"
+<li><a href="{% url 'products:products' %}"
        {% if request.resolver_match.url_name == 'products'%}
             class="active"
        {% endif%}

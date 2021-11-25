@@ -1,6 +1,7 @@
 import json
 import os
 from django.shortcuts import render
+from mainapp.models import Product, ProductCategory
 
 # Create your views here.
 module_dir = os.path.dirname(__file__,)
@@ -23,50 +24,20 @@ menu = [
 
 
 def index(request):
-    context = {'title': 'главная'}
+    context = {
+        'products': Product.objects.all()[:4],
+        'title': 'главная'}
     return render(request, "mainapp/index.html", context)
 
 
-def products(request):
+def products(request, pk=None):
     file_path = os.path.join(module_dir, 'fixtures/products.json')
     products = json.load(open(file_path, encoding='utf-8'))
     context = {
-        'links_menu': links_menu,
+        'links_menu': ProductCategory.objects.all(),
         'title': 'продукты',
         'products': products,
 
-    }
-    return render(request, "mainapp/products.html", context)
-
-
-def products_home(request):
-    context = {
-        'links_menu': links_menu,
-        'title': 'дом'
-    }
-    return render(request, "mainapp/products.html", context)
-
-
-def products_office(request):
-    context = {
-        'links_menu': links_menu,
-        'title': 'офис'
-    }
-    return render(request, "mainapp/products.html", context)
-
-
-def products_modern(request):
-    context = {
-        'links_menu': links_menu,
-        'title': 'модерн'
-    }
-    return render(request, "mainapp/products.html", context)
-
-
-def products_classic(request):
-    context = {
-        'links_menu': links_menu,
-        'title': 'классика'
     }
     return render(request, "mainapp/products.html", context)
 

@@ -1,9 +1,10 @@
 <ul class="links-menu">
+    <li><a href="{% url 'products:products' %}">Все</a> </li>
     {% for link in links_menu %}
         <li><a
-                href="{% url link.url %}"
+                href="#"
                 {% if request.resolver_match.url_name == link.url %}class="active"
                 {% endif %}
-            >{{ link.title}}</a></li>
+            >{{ link.name}}</a></li>
     {% endfor %}
 </ul>
