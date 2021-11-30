@@ -3,12 +3,14 @@
             class="active"
        {% endif%}>домой</a>
 </li>
+
 <li><a href="{% url 'products:products' %}"
        {% if request.resolver_match.url_name == 'products'%}
             class="active"
        {% endif%}
         >продукты</a>
 </li>
+
 <li><a href="{% url 'contact' %}"
        {% if request.resolver_match.url_name == 'contact'%}
             class="active"
