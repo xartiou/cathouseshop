@@ -17,3 +17,12 @@
         {% endif%}
         >контакты</a>
 </li>
+
+
+<li>
+{% if user.is_authenticated %}
+    <a href="{% url 'auth:logout' %}">выйти</a>
+{% else %}
+    <a href="{% url 'auth:login' %}">войти</a>
+{% endif %}
+</li>

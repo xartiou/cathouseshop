@@ -6,8 +6,10 @@ from authapp.forms import ShopUserLoginForm
 
 
 def login(request):
+    title = 'вход'
+
     login_form = ShopUserLoginForm(data=request.POST)
-    if request.metod == 'POST' and login_form.is_valid():
+    if request.method == 'POST' and login_form.is_valid():
         username = request.POST.get('username')
         password = request.POST.get('password')
 
@@ -16,11 +18,11 @@ def login(request):
             auth.login(request, user)
             return HttpResponseRedirect(reverse('index'))
     context = {
-        'login_form':login_form
+        'title': title,
+        'login_form': login_form
     }
 
-
-        return render(request, '', context)
+    return render(request, 'authapp/login.html', context)
 
 
 def logout(request):
