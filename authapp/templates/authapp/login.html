@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block content %}
-<form class="form-horizontal" action="{% url 'auth:login' %}" method="post">
-    {% csrf_token %}
-    {{ login_form.as_p }}
-    <br>
-    <input class="form-control" type="submit" value="войти">
-</form>
+    <form class="form-horizontal" action="{% url 'auth:login' %}" method="post">
+        {% csrf_token %}
+        {{ login_form.as_p }}
+        <br>
+        <input class="form-control" type="submit" value="войти">
+    </form>
     <hr>
     <a href="{% url 'auth:login' %}">регистрация</a>
 {% endblock %}

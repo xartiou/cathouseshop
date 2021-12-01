@@ -34,15 +34,15 @@
     </div>
     <div class="tab-content">
         {% for product  in products %}
-        <div class="block">
-            <a href="#"><img src="/media/{{ product.image }}" alt="">
-                <div class="text">
-                    <img src="{% static 'img/icon-hover.png' %}" alt="img">
-                    <h4>{{ product.name }}</h4>
-                    <p>{{ product_short_desc }}</p>
-                </div>
-            </a>
-        </div>
+            <div class="block">
+                <a href="#"><img src="/media/products_images/{{ product.img }}" alt="">
+                    <div class="text">
+                        <img src="{% static 'img/icon-hover.png' %}" alt="img">
+                        <h4>{{ product.name }}</h4>
+                        <p>{{ product_short_desc }}</p>
+                    </div>
+                </a>
+            </div>
         {% endfor %}
     </div>
 </div>
