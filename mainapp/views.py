@@ -1,5 +1,7 @@
 import json
 import os
+import random
+
 from django.shortcuts import render, get_object_or_404
 from mainapp.models import Product, ProductCategory
 
@@ -23,9 +25,11 @@ menu = [
 
 
 def index(request):
+    products = Product.objects.all()[2:5]
     context = {
-        'products': Product.objects.all()[:4],
-        'title': 'главная'}
+        'products': products,
+        'title': 'главная'
+    }
     return render(request, "mainapp/index.html", context=context)
 
 
@@ -53,11 +57,14 @@ def products(request, pk=None):
         }
         return render(request, "mainapp/products_list.html", context=context)
 
+    hot_product = random.sample(list(Product.objects.all()), 1)[0]
+    same_products = Product.objects.all()[3:6]
     context = {
         'links_menu': links_menu,
         'title': 'продукты',
         'products': products,
-
+        'hot_product': hot_product,
+        'same_products': same_products
     }
     return render(request, "mainapp/products.html", context=context)
 

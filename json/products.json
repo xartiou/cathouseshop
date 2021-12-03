@@ -2,42 +2,42 @@
   {
     "category": "дом",
     "name": "стул для дома",
-    "image": "product_images/product-2.jpg",
+    "image": "img/product-2.jpg",
     "price": "987",
     "quantity": "10"
   },
   {
     "category": "дом",
     "name": "табурет",
-    "image": "product_images/product-4.jpg",
+    "image": "img/product-4.jpg",
     "price": "450",
     "quantity": "12"
   },
   {
     "category": "офис",
     "name": "офисный стул",
-    "image": "product_images/product-21.jpg",
+    "image": "img/product-21.jpg",
     "price": "3000",
     "quantity": "16"
   },
   {
     "category": "офис",
     "name": "кресло руководителя",
-    "image": "product_images/product-41.jpg",
+    "image": "img/product-41.jpg",
     "price": "15000",
     "quantity": "9"
   },
   {
     "category": "классика",
     "name": "классический стул",
-    "image": "product_images/product-51.jpg",
+    "image": "img/product-51.jpg",
     "price": "11999",
     "quantity": "12"
   },
   {
     "category": "модерн",
     "name": "artnuvo",
-    "image": "product_images/product-61.jpg",
+    "image": "img/product-61.jpg",
     "price": "7000",
     "quantity": "8"
   }
