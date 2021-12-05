@@ -3,32 +3,25 @@ import os
 import random
 
 from django.shortcuts import render, get_object_or_404
+
+from basketapp.models import Basket
 from mainapp.models import Product, ProductCategory
 
 # Create your views here.
 module_dir = os.path.dirname(__file__, )
 
-links_menu = [
-    {'url': 'products', 'title': 'все'},
-    {'url': 'products_home', 'title': 'дом'},
-    {'url': 'products_office', 'title': 'офис'},
-    {'url': 'products_modern', 'title': 'модерн'},
-    {'url': 'products_classic', 'title': 'классика'},
-]
 
-menu = [
-    {'href': 'index', 'title': 'главная'},
-    {'href': 'products', 'title': 'продукты'},
-    {'href': 'contact', 'title': 'контакты'},
-
-]
+def get_basket(user):
+    if user.is_authenticated:
+        return Basket.objects.filter(user=user)
+    return []
 
 
 def index(request):
-    products = Product.objects.all()[2:5]
     context = {
-        'products': products,
-        'title': 'главная'
+        'products': Product.objects.all()[2:5],
+        'title': 'главная',
+        'basket': get_basket(request.user)
     }
     return render(request, "mainapp/index.html", context=context)
 
@@ -37,7 +30,7 @@ def products(request, pk=None):
     links_menu = ProductCategory.objects.all()
 
     file_path = os.path.join(module_dir, 'fixtures/products.json')
-    products = json.load(open(file_path, encoding='utf-8'))
+    # products = json.load(open(file_path, encoding='utf-8'))
 
     if pk is not None:
         if pk == 0:
@@ -54,6 +47,7 @@ def products(request, pk=None):
             'title': 'продукты',
             'category': category_item,
             'products': products_list,
+            'basket': get_basket(request.user)
         }
         return render(request, "mainapp/products_list.html", context=context)
 
@@ -64,11 +58,15 @@ def products(request, pk=None):
         'title': 'продукты',
         'products': products,
         'hot_product': hot_product,
-        'same_products': same_products
+        'same_products': same_products,
+        'basket': get_basket(request.user)
     }
     return render(request, "mainapp/products.html", context=context)
 
 
 def contact(request):
-    context = {'title': 'контакты'}
+    context = {
+        'title': 'контакты',
+        'basket': get_basket(request.user)
+    }
     return render(request, "mainapp/contact.html", context)
