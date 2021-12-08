@@ -13,9 +13,9 @@ module_dir = os.path.dirname(__file__, )
 
 def get_basket(user):
     if user.is_authenticated:
-        return sum(list(Basket.objects.filter(user=user).values_list('quantity', flat=True)))
+        return Basket.objects.filter(user=user)
     else:
-        return 0
+        return []
 
 
 def index(request):

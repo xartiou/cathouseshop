@@ -6,7 +6,13 @@ from mainapp.models import Product
 
 
 def basket(request):
-    pass
+    # выбираем все корзины текущего авторизованного пользователя
+    basket_list = Basket.objects.filter(user=request.user)
+
+    context = {
+        'basket': basket_list
+    }
+    return render(request, '', context)
 
 
 def add(request, pk):
