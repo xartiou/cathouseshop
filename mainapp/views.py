@@ -35,6 +35,7 @@ def get_same_products(hot_product):
     products_list = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk)[:3]
     return products_list
 
+
 def products(request, pk=None):
     links_menu = ProductCategory.objects.all()
 
@@ -73,9 +74,19 @@ def products(request, pk=None):
     return render(request, 'mainapp/products.html', context)
 
 
+def product(request, pk):
+    links_menu = ProductCategory.objects.all()
+    context = {
+        'product': get_object_or_404(product, pk=pk),
+        'basket': get_basket(request.user),
+        'links_menu': links_menu
+    }
+    return render(request, 'mainapp/product.html', context=context)
+
+
 def contact(request):
     context = {
         'title': 'контакты',
         'basket': get_basket(request.user)
     }
-    return render(request, "mainapp/contact.html", context)
+    return render(request, "mainapp/contact.html", context=context)
