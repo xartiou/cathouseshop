@@ -77,7 +77,7 @@ def products(request, pk=None):
 def product(request, pk):
     links_menu = ProductCategory.objects.all()
     context = {
-        'product': get_object_or_404(product, pk=pk),
+        'product': get_object_or_404(Product, pk=pk),
         'basket': get_basket(request.user),
         'links_menu': links_menu
     }
