@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-
+from django.contrib.auth.decorators import login_required
 from basketapp.models import Basket
 from mainapp.models import Product
 
 
+@login_required
 def basket(request):
     # выбираем все корзины текущего авторизованного пользователя
     basket_list = Basket.objects.filter(user=request.user)
@@ -15,6 +16,7 @@ def basket(request):
     return render(request, 'basketapp/basket.html', context)
 
 
+@login_required
 def add(request, pk):
     product_item = get_object_or_404(Product, pk=pk)
 
@@ -30,6 +32,7 @@ def add(request, pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required
 def remove(request, pk):
     basket_item = get_object_or_404(Basket, pk=pk)
     basket_item.delete()

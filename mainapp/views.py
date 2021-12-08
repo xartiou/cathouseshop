@@ -1,11 +1,10 @@
 import json
 import os
 import random
-
 from django.shortcuts import render, get_object_or_404
-
 from basketapp.models import Basket
 from mainapp.models import Product, ProductCategory
+
 
 # Create your views here.
 module_dir = os.path.dirname(__file__, )
