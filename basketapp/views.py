@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404, HttpResponsePermanentRedirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 
 from basketapp.models import Basket
 from mainapp.models import Product
@@ -20,11 +21,11 @@ def add(request, pk):
     basket_item.save()
 
     # возвращаем пользователя на  ту страницу где он был используя метаданные
-    return HttpResponsePermanentRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def remove(request, pk):
     basket_item = get_object_or_404(Basket, pk=pk)
     basket_item.delete()
     # возвращаем пользователя на  ту страницу где он был используя метаданные
-    return HttpResponsePermanentRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

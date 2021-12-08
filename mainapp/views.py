@@ -13,8 +13,9 @@ module_dir = os.path.dirname(__file__, )
 
 def get_basket(user):
     if user.is_authenticated:
-        return Basket.objects.filter(user=user)
-    return []
+        return sum(list(Basket.objects.filter(user=user).values_list('quantity', flat=True)))
+    else:
+        return 0
 
 
 def index(request):
@@ -52,7 +53,7 @@ def products(request, pk=None):
         return render(request, "mainapp/products_list.html", context=context)
 
     hot_product = random.sample(list(Product.objects.all()), 1)[0]
-    same_products = Product.objects.all()[3:6]
+    same_products = Product.objects.all()[:3]
     context = {
         'links_menu': links_menu,
         'title': 'продукты',
