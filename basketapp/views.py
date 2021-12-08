@@ -12,7 +12,7 @@ def basket(request):
     context = {
         'basket': basket_list
     }
-    return render(request, '', context)
+    return render(request, 'basketapp/basket.html', context)
 
 
 def add(request, pk):
