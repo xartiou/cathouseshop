@@ -37,10 +37,8 @@ def get_same_products(hot_product):
 
 def products(request, pk=None):
     links_menu = ProductCategory.objects.all()
-
-    file_path = os.path.join(module_dir, 'fixtures/products.json')
+    # file_path = os.path.join(module_dir, 'fixtures/products.json')
     # products = json.load(open(file_path, encoding='utf-8'))
-
     if pk is not None:
         if pk == 0:
             products_list = Product.objects.all()
@@ -70,15 +68,17 @@ def products(request, pk=None):
         'same_products': same_products,
         'basket': get_basket(request.user)
     }
-    return render(request, 'mainapp/products.html', context)
+    return render(request, 'mainapp/products.html', context=context)
 
 
 def product(request, pk):
-    links_menu = ProductCategory.objects.all()
+
     context = {
         'product': get_object_or_404(Product, pk=pk),
         'basket': get_basket(request.user),
-        'links_menu': links_menu
+        'title': 'продукты',
+        'links_menu': ProductCategory.objects.all(),
+
     }
     return render(request, 'mainapp/product.html', context=context)
 

@@ -16,7 +16,7 @@
     {% endblock %}
 
     {% block js %}
-        <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
         <script src="{% static 'js/basket_scripts.js' %}"></script>
     {% endblock %}
 </head>
@@ -26,9 +26,9 @@
             Ваша корзина, {% if user.first_name %}{{ user.first_name }}{% else %}Пользователь{% endif %}
         </div>
 
-        {% block content %}
+    {% block content %}
 
-        {% endblock %}
+    {% endblock %}
 
     </div>
 </body>

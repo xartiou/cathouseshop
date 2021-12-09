@@ -4,22 +4,14 @@ from mainapp.models import Product
 
 
 class Basket(models.Model):
-    # кто положил в корзину
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='basket')
-    # что положил в корзину
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    # сколько
-    quantity = models.PositiveSmallIntegerField(default=0)
-
-    # когда добавили в корзину
-    add_daytime = models.DateTimeField(auto_now_add=True)
-
-    # когда обновили
-    # updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='basket')  # кто положил в корзину
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)  # что положил в корзину
+    quantity = models.PositiveSmallIntegerField(default=0)  # сколько
+    add_daytime = models.DateTimeField(auto_now_add=True)  # когда добавили в корзину
+    # updated_at = models.DateTimeField(auto_now=True)  # когда обновили
 
     @property  # декоратор преобразовывает метод в атрибут
-    def product_cost(self):
-        # стоимость товаров в одной корзинке
+    def product_cost(self):  # стоимость товаров в одной корзинке
         return self.quantity * self.product.price
 
     @property

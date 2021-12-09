@@ -6,11 +6,8 @@ from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditF
 
 def login(request):
     title = 'вход'
-
     login_form = ShopUserLoginForm(data=request.POST)
-
-    # Получим значение переменной next в контроллере
-    next_param = request.GET['next'] if 'next' in request.GET.keys() else ''
+    next_param = request.GET['next'] if 'next' in request.GET.keys() else ''  # Получим значение переменной next в контроллере
 
     if request.method == 'POST' and login_form.is_valid():
         username = request.POST.get('username')
