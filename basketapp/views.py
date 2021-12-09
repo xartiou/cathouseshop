@@ -46,10 +46,10 @@ def remove(request, pk):
 
 
 @login_required
-def edit(request, quantity):
+def edit(request, pk, quantity):
     if request.is_ajax():
         quantity = int(quantity)
-        new_basket_item = Basket.objects.get(pk=int('pk'))
+        new_basket_item = Basket.objects.get(pk=pk)
 
         if quantity > 0:
             new_basket_item.quantity = quantity
@@ -57,10 +57,10 @@ def edit(request, quantity):
         else:
             new_basket_item.delete()
 
-        basket_item = Basket.objects.filter(user=request.user).order_by('product')
+        basket_list = Basket.objects.filter(user=request.user).order_by('product')
 
         context = {
-            'basket_items': basket_item
+            'baskets': basket_list
         }
 
         result = render_to_string('basketapp/includes/inc_baskets_list.html', context)
