@@ -72,12 +72,11 @@ def products(request, pk=None):
 
 
 def product(request, pk):
-
     context = {
-        'product': get_object_or_404(Product, pk=pk),
-        'basket': get_basket(request.user),
         'title': 'продукты',
         'links_menu': ProductCategory.objects.all(),
+        'product': get_object_or_404(Product, pk=pk),
+        'basket': get_basket(request.user),
 
     }
     return render(request, 'mainapp/product.html', context=context)

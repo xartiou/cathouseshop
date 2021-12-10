@@ -14,6 +14,7 @@ def user_create(request):
 
 def users(request):
     context = {
+        'title': 'админка/пользователи',
         'object_list': ShopUser.objects.all().order_by('-is_active')
     }
     return render(request, 'adminapp/users.html', context=context)
@@ -44,7 +45,8 @@ def category_create(request):
 
 def categories(request):
     context = {
-        'object_list': Product.objects.all().order_by('-is_active')
+        'title': 'админка/категории',
+        'object_list': ProductCategory.objects.all().order_by('-is_active')
     }
     return render(request, 'adminapp/categories.html', context=context)
 
@@ -74,9 +76,10 @@ def product_create(request):
 
 def products(request, pk):
     context = {
-        'object_list': ShopUser.objects.filter(category__pk=pk).order_by('-is_active')
+        'category': get_object_or_404(ProductCategory, pk=pk),
+        'object_list': Product.objects.filter(category__pk=pk).order_by('-is_active')
     }
-    return render(request, 'mainapp/products.html', context=context)
+    return render(request, 'adminapp/products.html', context=context)
 
 
 def product_update(request):

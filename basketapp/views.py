@@ -20,7 +20,7 @@ def basket(request):  # отображение корзины
 
 
 @login_required
-def add(request, pk):
+def basket_add(request, pk):
     if 'login' in request.META.get('HTTP_REFERER'):
         return HttpResponseRedirect(reverse('products:product', args=[pk]))
 
