@@ -2,84 +2,99 @@ from authapp.models import ShopUser
 from django.shortcuts import get_object_or_404, render
 from mainapp.models import Product, ProductCategory
 
-
-def users(request):
-    title = 'админка/пользователи'
-
-    users_list = ShopUser.objects.all().order_by('-is_active', '-is_superuser', '-is_staff', 'username')
-
-    content = {
-        'title': title,
-        'objects': users_list
-    }
-
-    return render(request, 'adminapp/users.html', content)
+# user
 
 
 def user_create(request):
-    pass
+    context = {
 
-
-def user_update(request, pk):
-    pass
-
-
-def user_delete(request, pk):
-    pass
-
-
-def categories(request):
-    title = 'админка/категории'
-
-    categories_list = ProductCategory.objects.all()
-
-    content = {
-        'title': title,
-        'objects': categories_list
     }
+    return render(request, '', context=context)
 
-    return render(request, 'adminapp/categories.html', content)
+
+def users(request):
+    context = {
+        'object_list': ShopUser.objects.all().order_by('-is_active')
+    }
+    return render(request, 'adminapp/users.html', context=context)
+
+
+def user_update(request):
+    context = {
+
+    }
+    return render(request, '', context=context)
+
+
+def user_delete(request):
+    context = {
+
+    }
+    return render(request, '', context=context)
+
+# category
 
 
 def category_create(request):
-    pass
+    context = {
+
+    }
+    return render(request, '', context=context)
 
 
-def category_update(request, pk):
-    pass
+def categories(request):
+    context = {
+        'object_list': Product.objects.all().order_by('-is_active')
+    }
+    return render(request, 'adminapp/categories.html', context=context)
 
 
-def category_delete(request, pk):
-    pass
+def category_update(request):
+    context = {
+
+    }
+    return render(request, '', context=context)
+
+
+def category_delete(request):
+    context = {
+
+    }
+    return render(request, '', context=context)
+
+# product
+
+
+def product_create(request):
+    context = {
+
+    }
+    return render(request, '', context=context)
 
 
 def products(request, pk):
-    title = 'админка/продукт'
-
-    category = get_object_or_404(ProductCategory, pk=pk)
-    products_list = Product.objects.filter(category__pk=pk).order_by('name')
-
-    content = {
-        'title': title,
-        'category': category,
-        'objects': products_list,
+    context = {
+        'object_list': ShopUser.objects.filter(category__pk=pk).order_by('-is_active')
     }
-
-    return render(request, 'adminapp/products.html', content)
-
-
-def product_create(request, pk):
-    pass
+    return render(request, 'mainapp/products.html', context=context)
 
 
-def product_read(request, pk):
-    pass
+def product_update(request):
+    context = {
+
+    }
+    return render(request, '', context=context)
 
 
-def product_update(request, pk):
-    pass
+def product_delete(request):
+    context = {
+
+    }
+    return render(request, '', context=context)
 
 
-def product_delete(request, pk):
-    pass
+def product_detail(request):
+    context = {
 
+    }
+    return render(request, '', context=context)
