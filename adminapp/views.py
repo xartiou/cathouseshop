@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import user_passes_test
 # user
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def user_create(request):
     context = {
 
@@ -22,6 +23,7 @@ def users(request):
     return render(request, 'adminapp/users.html', context=context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def user_update(request):
     context = {
 
@@ -29,6 +31,7 @@ def user_update(request):
     return render(request, '', context=context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def user_delete(request):
     context = {
 
@@ -38,6 +41,7 @@ def user_delete(request):
 # category
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def category_create(request):
     context = {
 
@@ -45,6 +49,7 @@ def category_create(request):
     return render(request, '', context=context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def categories(request):
     context = {
         'title': 'админка/категории',
@@ -53,6 +58,7 @@ def categories(request):
     return render(request, 'adminapp/categories.html', context=context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def category_update(request):
     context = {
 
@@ -60,6 +66,7 @@ def category_update(request):
     return render(request, '', context=context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def category_delete(request):
     context = {
 
@@ -69,6 +76,7 @@ def category_delete(request):
 # product
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def product_create(request):
     context = {
 
@@ -76,6 +84,7 @@ def product_create(request):
     return render(request, '', context=context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def products(request, pk):
     context = {
         'category': get_object_or_404(ProductCategory, pk=pk),
@@ -84,6 +93,7 @@ def products(request, pk):
     return render(request, 'adminapp/products.html', context=context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def product_update(request):
     context = {
 
@@ -91,6 +101,7 @@ def product_update(request):
     return render(request, '', context=context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def product_delete(request):
     context = {
 
@@ -98,6 +109,7 @@ def product_delete(request):
     return render(request, '', context=context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def product_detail(request):
     context = {
 
