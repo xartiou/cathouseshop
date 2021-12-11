@@ -2,7 +2,7 @@ from django.db import models
 
 
 # Create your models here.
-
+# NULLABLE = {'null': True, 'blank': True}
 
 class ProductCategory(models.Model):
     objects = None
@@ -29,6 +29,9 @@ class Product(models.Model):
     price = models.DecimalField(verbose_name='цена продукта', max_digits=8, decimal_places=2, default=0)
     quantity = models.PositiveIntegerField(verbose_name='количество на складе', default=0)
     is_active = models.BooleanField(default=True)
+
+    # update_at = models.DateTimeField(auto_now=True, **NULLABLE)
+    # created_at = models.DateTimeField(auto_now=True, **NULLABLE)
 
     def __str__(self):
         return f"{self.name} ({self.category.name})"

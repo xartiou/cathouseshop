@@ -1,17 +1,32 @@
+from adminapp.forms import ShopUserAdminEditForm
 from authapp.models import ShopUser
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, HttpResponseRedirect
 from mainapp.models import Product, ProductCategory
 from django.contrib.auth.decorators import user_passes_test
+from django.urls import reverse
 
 # user
 
 
 @user_passes_test(lambda u: u.is_superuser)
 def user_create(request):
-    context = {
 
+    title = 'пользователи/создание'
+
+    if request.method == 'POST':
+        user_form = ShopUserAdminEditForm(request.POST, request.FILES)
+
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect(reverse('adminapp:user_list'))
+    else:
+        user_form = ShopUserAdminEditForm()
+
+    context = {
+        'title': title,
+        'form': user_form
     }
-    return render(request, '', context=context)
+    return render(request, 'adminapp/user_form.html', context=context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
