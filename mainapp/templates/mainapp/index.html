@@ -11,6 +11,7 @@
             {% include 'mainapp/includes/inc_main_menu.html' %}
         </ul>
         <a href="#" class="search"></a>
+        <a href="#" class="basket"></a>
     </div>
     <div class="text-slider">
         <h3 class="green">тенденции {% now "Y"%}</h3>
@@ -25,27 +26,27 @@
 {% endblock %}
 
 {% block content %}
-<div class="featured">
-    <div class="featured-menu">
-        <a class="active" href="#">Популярные</a><a href="#">Новинки</a>
-    </div>
-    <a class="explore" href="#">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
-    <div class="clearfix">
-    </div>
-    <div class="tab-content">
-        {% for product  in products %}
-        <div class="block">
-            <a href="#"><img src="/media/{{ product.image }}" alt="">
-                <div class="text">
-                    <img src="{% static 'img/icon-hover.png' %}" alt="img">
-                    <h4>{{ product.name }}</h4>
-                    <p>{{ product_short_desc }}</p>
-                </div>
-            </a>
+    <div class="featured">
+        <div class="featured-menu">
+            <a class="active" href="#">Популярные</a><a href="#">Новинки</a>
         </div>
-        {% endfor %}
+        <a class="explore" href="#">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
+        <div class="clearfix">
+        </div>
+        <div class="tab-content">
+            {% for product in products %}
+            <div class="block">
+                <a href="#"><img src="/media/{{ product.image }}" alt="">
+                    <div class="text">
+                        <img src="{% static 'img/icon-hover.png' %}" alt="img">
+                        <h4>{{ product.name }}</h4>
+                        <p>{{ product.category.name }}</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-</div>
 {% endblock %}
 
 
