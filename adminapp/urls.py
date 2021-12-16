@@ -1,4 +1,4 @@
-from adminapp import views as admin_views
+import adminapp.views as admin_views
 from django.urls import path
 
 

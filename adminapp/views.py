@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, render, HttpResponseRedirect
 from mainapp.models import Product, ProductCategory
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse
+from mainapp.models import ProductCategory
 
 # user
 
@@ -92,7 +93,7 @@ def category_create(request):
 
         if category_form.is_valid():
             category_form.save()
-            return HttpResponseRedirect(reverse('adminapp:category_list'))
+            return HttpResponseRedirect(reverse('adminapp:categories'))
     else:
         category_form = ProductCategoryEditForm()
 
@@ -100,7 +101,7 @@ def category_create(request):
         'title': title,
         'form': category_form
     }
-    return render(request, 'adminapp/category_update.html', context=context)
+    return render(request, 'adminapp/category_create.html', context=context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -121,12 +122,12 @@ def category_update(request, pk):
         edit_form = ProductCategoryEditForm(request.POST, request.FILES, instance=edit_category)
         if edit_form.is_valid():
             edit_form.save()
-            return HttpResponseRedirect(reverse('adminapp:category_list', args=[edit_category.pk]))
+            return HttpResponseRedirect(reverse('adminapp:category_list'))
     else:
         edit_form = ProductEditForm(instance=edit_category)
     context = {
         'title': title,
-        'update_form': edit_form,
+        'form': edit_form,
     }
     return render(request, 'adminapp/category_update.html', context)
 
