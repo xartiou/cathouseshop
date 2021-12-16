@@ -1,11 +1,10 @@
 import json
 import os
 import random
-
 from django.shortcuts import render, get_object_or_404
-
 from basketapp.models import Basket
 from mainapp.models import Product, ProductCategory
+
 
 # Create your views here.
 module_dir = os.path.dirname(__file__, )
@@ -14,7 +13,8 @@ module_dir = os.path.dirname(__file__, )
 def get_basket(user):
     if user.is_authenticated:
         return Basket.objects.filter(user=user)
-    return []
+    else:
+        return []
 
 
 def index(request):
@@ -26,12 +26,19 @@ def index(request):
     return render(request, "mainapp/index.html", context=context)
 
 
+def get_hot_product():
+    return random.sample(list(Product.objects.all()), 1)[0]
+
+
+def get_same_products(hot_product):
+    products_list = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk)[:3]
+    return products_list
+
+
 def products(request, pk=None):
     links_menu = ProductCategory.objects.all()
-
-    file_path = os.path.join(module_dir, 'fixtures/products.json')
+    # file_path = os.path.join(module_dir, 'fixtures/products.json')
     # products = json.load(open(file_path, encoding='utf-8'))
-
     if pk is not None:
         if pk == 0:
             products_list = Product.objects.all()
@@ -51,8 +58,8 @@ def products(request, pk=None):
         }
         return render(request, "mainapp/products_list.html", context=context)
 
-    hot_product = random.sample(list(Product.objects.all()), 1)[0]
-    same_products = Product.objects.all()[3:6]
+    hot_product = get_hot_product()
+    same_products = get_same_products(hot_product)
     context = {
         'links_menu': links_menu,
         'title': 'продукты',
@@ -61,7 +68,19 @@ def products(request, pk=None):
         'same_products': same_products,
         'basket': get_basket(request.user)
     }
-    return render(request, "mainapp/products.html", context=context)
+    return render(request, 'mainapp/products.html', context=context)
+
+
+def product(request, pk):
+
+    context = {
+        'product': get_object_or_404(Product, pk=pk),
+        'basket': get_basket(request.user),
+        'title': 'продукты',
+        'links_menu': ProductCategory.objects.all(),
+
+    }
+    return render(request, 'mainapp/product.html', context=context)
 
 
 def contact(request):
@@ -69,4 +88,4 @@ def contact(request):
         'title': 'контакты',
         'basket': get_basket(request.user)
     }
-    return render(request, "mainapp/contact.html", context)
+    return render(request, "mainapp/contact.html", context=context)
