@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse
 
 
-class AccessMixin:
+class AccessMixin:  # проверка на  is_superuser
 
     @method_decorator(user_passes_test(lambda u: u.is_superuser))
     def dispatch(self, request, *args, **kwargs):
@@ -48,8 +48,8 @@ def user_create(request):
 #     return render(request, 'adminapp/users.html', context=context)
 
 class UsersListView(ListView, AccessMixin):
-    model = ShopUser
-    template_name = 'adminapp/users.html'
+    model = ShopUser  # название класса модели
+    template_name = 'adminapp/users.html'  # путь к шаблону
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -184,15 +184,19 @@ def product_create(request, pk):
     return render(request, 'adminapp/product_update.html', context=context)
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def products(request, pk):
-    title = 'продукты/подробнее'
-    context = {
-        'title': title,
-        'category': get_object_or_404(ProductCategory, pk=pk),
-        'object_list': Product.objects.filter(category__pk=pk).order_by('-is_active')
-    }
-    return render(request, 'adminapp/products.html', context=context)
+# @user_passes_test(lambda u: u.is_superuser)
+# def products(request, pk):
+#     title = 'продукты/подробнее'
+#     context = {
+#         'title': title,
+#         'category': get_object_or_404(ProductCategory, pk=pk),
+#         'object_list': Product.objects.filter(category__pk=pk).order_by('-is_active')
+#     }
+#     return render(request, 'adminapp/products.html', context=context)
+
+class ProductsListView(ListView, AccessMixin):
+    model = Product
+    template_name = 'adminapp/products.html'
 
 
 @user_passes_test(lambda u: u.is_superuser)
