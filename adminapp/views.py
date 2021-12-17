@@ -1,5 +1,5 @@
 from django.utils.decorators import method_decorator
-
+from django.views.generic.list import ListView
 from authapp.forms import ShopUserRegisterForm
 from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm, ProductEditForm
 from authapp.models import ShopUser
