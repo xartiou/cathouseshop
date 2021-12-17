@@ -198,6 +198,9 @@ class ProductsListView(ListView, AccessMixin):
     model = Product
     template_name = 'adminapp/products.html'
 
+    def get_queryset(self):
+        return Product.objects.filter(category__pk=self.kwargs.get('pk'))
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def product_update(request, pk):
