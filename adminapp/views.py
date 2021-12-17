@@ -198,7 +198,12 @@ class ProductsListView(ListView, AccessMixin):
     model = Product
     template_name = 'adminapp/products.html'
 
-    def get_queryset(self):
+    def get_context_data(self, *args, **kwargs):  # выбор нужной категории
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['category'] = get_object_or_404(ProductCategory, pk=self.kwargs.get('pk'))
+        return context_data
+
+    def get_queryset(self):  # выбор товаров нужной категории
         return Product.objects.filter(category__pk=self.kwargs.get('pk'))
 
 
