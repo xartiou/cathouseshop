@@ -38,6 +38,7 @@ def get_same_products(hot_product):
 
 def products(request, pk=None, page=1):
     links_menu = ProductCategory.objects.all()
+    products = Product.objects.filter(is_active=True, category__is_active=True)
     # file_path = os.path.join(module_dir, 'fixtures/products.json')
     # products = json.load(open(file_path, encoding='utf-8'))
     if pk is not None:
