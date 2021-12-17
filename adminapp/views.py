@@ -247,19 +247,29 @@ class ProductUpdateView(UpdateView):
         return reverse('adminapp:product_list', args=[product_item.category_id])
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def product_delete(request, pk):
-    title = 'продукт/удаление'
-    product = get_object_or_404(Product, pk=pk)
-    if request.method == 'POST':
-        product.is_active = False
-        product.save()
-        return HttpResponseRedirect(reverse('adminapp:product_list', args=[product.category.pk]))
-    context = {
-        'title': title,
-        'product_to_delete': product
-    }
-    return render(request, 'adminapp/product_delete.html', context)
+# @user_passes_test(lambda u: u.is_superuser)
+# def product_delete(request, pk):
+#     title = 'продукт/удаление'
+#     product = get_object_or_404(Product, pk=pk)
+#     if request.method == 'POST':
+#         product.is_active = False
+#         product.save()
+#         return HttpResponseRedirect(reverse('adminapp:product_list', args=[product.category.pk]))
+#     context = {
+#         'title': title,
+#         'product_to_delete': product
+#     }
+#     return render(request, 'adminapp/product_delete.html', context)
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = 'adminapp/product_delete.html'
+
+    def get_success_url(self):
+        product_item = Product.objects.get(pk=self.kwargs['pk'])
+        return reverse('adminapp:product_list', args=[product_item.category_id])
+
+
 
 
 @user_passes_test(lambda u: u.is_superuser)
