@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render, HttpResponseRedirect
 from mainapp.models import Product, ProductCategory
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse
-from mainapp.models import ProductCategory
+
 
 # user
 
