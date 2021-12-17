@@ -39,13 +39,18 @@ def user_create(request):
     return render(request, 'adminapp/user_form.html', context=context)
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def users(request):
-    context = {
-        'title': 'админка/пользователи',
-        'object_list': ShopUser.objects.all().order_by('-is_active')
-    }
-    return render(request, 'adminapp/users.html', context=context)
+# @user_passes_test(lambda u: u.is_superuser)
+# def users(request):
+#     context = {
+#         'title': 'админка/пользователи',
+#         'object_list': ShopUser.objects.all().order_by('-is_active')
+#     }
+#     return render(request, 'adminapp/users.html', context=context)
+
+class UsersListView(ListView, AccessMixin):
+    model = ShopUser
+    template_name = 'adminapp/users.html'
+
 
 
 @user_passes_test(lambda u: u.is_superuser)
