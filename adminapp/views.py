@@ -6,7 +6,8 @@ from authapp.models import ShopUser
 from django.shortcuts import get_object_or_404, render, HttpResponseRedirect
 from mainapp.models import Product, ProductCategory
 from django.contrib.auth.decorators import user_passes_test
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 class AccessMixin:  # проверка на  is_superuser
@@ -165,23 +166,34 @@ def category_delete(request, pk):
 # product
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def product_create(request, pk):
-    title = 'продукты/создание'
-    category = get_object_or_404(ProductCategory, pk=pk)
-    if request.method == 'POST':
-        product_form = ProductEditForm(request.POST, request.files)
-        if product_form.is_valid():
-            product_form.save()
-            return HttpResponseRedirect(reverse('adminapp:product_list', args=[pk]))
-    else:
-        product_form = ProductEditForm(initial={'category': category})
-    context = {
-        'title': title,
-        'update_form': product_form,
-        'category': category
-    }
-    return render(request, 'adminapp/product_update.html', context=context)
+# @user_passes_test(lambda u: u.is_superuser)
+# def product_create(request, pk):
+#     title = 'продукты/создание'
+#     category = get_object_or_404(ProductCategory, pk=pk)
+#     if request.method == 'POST':
+#         product_form = ProductEditForm(request.POST, request.files)
+#         if product_form.is_valid():
+#             product_form.save()
+#             return HttpResponseRedirect(reverse('adminapp:product_list', args=[pk]))
+#     else:
+#         product_form = ProductEditForm(initial={'category': category})
+#     context = {
+#         'title': title,
+#         'update_form': product_form,
+#         'category': category
+#     }
+#     return render(request, 'adminapp/product_update.html', context=context)
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    template_name = 'adminapp/product_form.html'
+    form_class = ProductEditForm
+    # success_url = reverse_lazy('adminapp:product_list')
+
+    def get_success_url(self):
+        return reverse('adminapp:product_list', args=[self.kwargs['pk']])
+
 
 
 # @user_passes_test(lambda u: u.is_superuser)
