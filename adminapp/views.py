@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+
 from authapp.forms import ShopUserRegisterForm
 from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm, ProductEditForm
 from authapp.models import ShopUser
@@ -6,6 +8,12 @@ from mainapp.models import Product, ProductCategory
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse
 
+
+class AccessMixin:
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 # user
 
