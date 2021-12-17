@@ -52,7 +52,6 @@ class UsersListView(ListView, AccessMixin):
     template_name = 'adminapp/users.html'
 
 
-
 @user_passes_test(lambda u: u.is_superuser)
 def user_update(request, pk):
     title = 'пользователи/редактирование'
