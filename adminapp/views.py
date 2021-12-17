@@ -195,7 +195,6 @@ class ProductCreateView(CreateView):
         return reverse('adminapp:product_list', args=[self.kwargs['pk']])
 
 
-
 # @user_passes_test(lambda u: u.is_superuser)
 # def products(request, pk):
 #     title = 'продукты/подробнее'
@@ -219,23 +218,33 @@ class ProductsListView(ListView, AccessMixin):
         return Product.objects.filter(category__pk=self.kwargs.get('pk'))
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def product_update(request, pk):
-    title = 'продукт/редактирование'
-    edit_product = get_object_or_404(Product, pk=pk)
-    if request.method == 'POST':
-        edit_form = ProductEditForm(request.POST, request.FILES, instance=edit_product)
-        if edit_form.is_valid():
-            edit_form.save()
-            return HttpResponseRedirect(reverse('adminapp:product_list', args=[edit_product.pk]))
-    else:
-        edit_form = ProductEditForm(instance=edit_product)
-    context = {
-        'title': title,
-        'update_form': edit_form,
-        'category': edit_product.category
-    }
-    return render(request, 'adminapp/product_update.html', context)
+# @user_passes_test(lambda u: u.is_superuser)
+# def product_update(request, pk):
+#     title = 'продукт/редактирование'
+#     edit_product = get_object_or_404(Product, pk=pk)
+#     if request.method == 'POST':
+#         edit_form = ProductEditForm(request.POST, request.FILES, instance=edit_product)
+#         if edit_form.is_valid():
+#             edit_form.save()
+#             return HttpResponseRedirect(reverse('adminapp:product_list', args=[edit_product.pk]))
+#     else:
+#         edit_form = ProductEditForm(instance=edit_product)
+#     context = {
+#         'title': title,
+#         'update_form': edit_form,
+#         'category': edit_product.category
+#     }
+#     return render(request, 'adminapp/product_update.html', context)
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    template_name = 'adminapp/product_form.html'
+    form_class = ProductEditForm
+    # success_url = reverse_lazy('adminapp:product_list')
+
+    def get_success_url(self):
+        product_item = Product.objects.get(pk=self.kwargs['pk'])
+        return reverse('adminapp:product_list', args=[product_item.category_id])
 
 
 @user_passes_test(lambda u: u.is_superuser)
