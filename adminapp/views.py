@@ -97,24 +97,30 @@ def user_delete(request, pk):
 # category
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def category_create(request):
-    title = 'категории/создание'
+# @user_passes_test(lambda u: u.is_superuser)
+# def category_create(request):
+#     title = 'категории/создание'
+#
+#     if request.method == 'POST':
+#         category_form = ProductCategoryEditForm(request.POST, request.FILES)
+#
+#         if category_form.is_valid():
+#             category_form.save()
+#             return HttpResponseRedirect(reverse('adminapp:categories'))
+#     else:
+#         category_form = ProductCategoryEditForm()
+#
+#     context = {
+#         'title': title,
+#         'form': category_form
+#     }
+#     return render(request, 'adminapp/category_create.html', context=context)
 
-    if request.method == 'POST':
-        category_form = ProductCategoryEditForm(request.POST, request.FILES)
-
-        if category_form.is_valid():
-            category_form.save()
-            return HttpResponseRedirect(reverse('adminapp:categories'))
-    else:
-        category_form = ProductCategoryEditForm()
-
-    context = {
-        'title': title,
-        'form': category_form
-    }
-    return render(request, 'adminapp/category_create.html', context=context)
+class ProductCategoryCreateView(CreateView):
+    model = ProductCategory
+    template_name = 'adminapp/category_create.html'
+    success_url = reverse_lazy('adminapp:categories')
+    fields = '__all__'
 
 
 @user_passes_test(lambda u: u.is_superuser)

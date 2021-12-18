@@ -7,7 +7,7 @@ register = template.Library()  # регистратор фильтров и те
 @register.filter(name='media_for_products')  # декоратор регистратора
 def media_for_products(img_path):
     if not img_path:
-        img_path = 'products_images/default.png'
+        img_path = 'products_images/product-61.jpg'
     return f'{settings.MEDIA_URL}{img_path}'
 
 

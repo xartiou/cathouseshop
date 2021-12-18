@@ -12,7 +12,7 @@ urlpatterns = [
     path('users/delete/<int:pk>/', admin_views.user_delete, name='user_delete'),
 
     # categories_product
-    path('categories/create/', admin_views.category_create, name='category_create'),
+    path('categories/create/', admin_views.ProductCategoryCreateView.as_view(), name='category_create'),
     path('categories/', admin_views.categories, name='category_list'),
     path('categories/update/<int:pk>/', admin_views.category_update, name='category_update'),
     path('categories/delete/<int:pk>/', admin_views.category_delete, name='category_delete'),
