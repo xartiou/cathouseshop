@@ -132,23 +132,35 @@ def categories(request):
     return render(request, 'adminapp/categories.html', context=context)
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def category_update(request, pk):
-    title = 'категории/редактирование'
+# @user_passes_test(lambda u: u.is_superuser)
+# def category_update(request, pk):
+#     title = 'категории/редактирование'
+#
+#     edit_category = get_object_or_404(ProductCategory, pk=pk)
+#     if request.method == 'POST':
+#         edit_form = ProductCategoryEditForm(request.POST, request.FILES, instance=edit_category)
+#         if edit_form.is_valid():
+#             edit_form.save()
+#             return HttpResponseRedirect(reverse('adminapp:category_list'))
+#     else:
+#         edit_form = ProductEditForm(instance=edit_category)
+#     context = {
+#         'title': title,
+#         'form': edit_form,
+#     }
+#     return render(request, 'adminapp/category_update.html', context)
 
-    edit_category = get_object_or_404(ProductCategory, pk=pk)
-    if request.method == 'POST':
-        edit_form = ProductCategoryEditForm(request.POST, request.FILES, instance=edit_category)
-        if edit_form.is_valid():
-            edit_form.save()
-            return HttpResponseRedirect(reverse('adminapp:category_list'))
-    else:
-        edit_form = ProductEditForm(instance=edit_category)
-    context = {
-        'title': title,
-        'form': edit_form,
-    }
-    return render(request, 'adminapp/category_update.html', context)
+class ProductCategoryUpdateView(UpdateView):
+    model = ProductCategory
+    template_name = 'adminapp/category_update.html'
+    success_url = reverse_lazy('adminapp:category_list')
+    fields = '__all__'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'категории/редактирование'
+
+        return context
 
 
 @user_passes_test(lambda u: u.is_superuser)
