@@ -21,11 +21,19 @@
                     Категория: "{{ category.name|title }}"
                 </h2>
             </div>
+            <div class="pagination">
+                {% if products.has_previous %}
+                    <a href="{% url 'mainapp:category_page' category.pk products.previous_page_number %}">назад</a>
+                {% endif %}
+                {{ products.number }}/{{products.paginator.num_pages }}
+                {% if products.has_next %}
+                    <a href="{% url 'mainapp:category_page' category.pk products.next_page_number %}">следующая</a>
+                {% endif %}
+            </div>
             <div class="category-products clearfix">
-
                 {% for product in products %}
                 <div class="block">
-                    <a href="{% url 'products:product' product.pk %}">
+                    <a href="{% url 'mainapp:product' product.pk %}">
                         <img src="/media/{{ product.image }}" alt="product">
                         <div class="text">
                             <img src="{% static 'img/icon-hover.png' %}" alt="hover">

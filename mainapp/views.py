@@ -1,6 +1,7 @@
 import json
 import os
 import random
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 from basketapp.models import Basket
 from mainapp.models import Product, ProductCategory
@@ -35,8 +36,9 @@ def get_same_products(hot_product):
     return products_list
 
 
-def products(request, pk=None):
+def products(request, pk=None, page=1):
     links_menu = ProductCategory.objects.all()
+    products = Product.objects.filter(is_active=True, category__is_active=True)
     # file_path = os.path.join(module_dir, 'fixtures/products.json')
     # products = json.load(open(file_path, encoding='utf-8'))
     if pk is not None:
@@ -49,11 +51,20 @@ def products(request, pk=None):
         else:
             category_item = get_object_or_404(ProductCategory, pk=pk)
             products_list = Product.objects.filter(category__pk=pk)
+
+        paginator = Paginator(products_list, 2)  # передаем откуда и сколько выводить
+        try:
+            products_paginator = paginator.page(page)  # с какой страницы по умолчанию
+        except PageNotAnInteger:  # обрабатываем исключение нецифрового номера страницы
+            products_paginator = paginator.page(1)  # выводим первую страницу
+        except EmptyPage:  # обрабатываем исключение превышенного номера страницы
+            products_paginator = paginator.page(paginator.num_pages)  # выводим последнюю страницу
+
         context = {
             'links_menu': links_menu,
             'title': 'продукты',
             'category': category_item,
-            'products': products_list,
+            'products': products_paginator,
             'basket': get_basket(request.user)
         }
         return render(request, "mainapp/products_list.html", context=context)

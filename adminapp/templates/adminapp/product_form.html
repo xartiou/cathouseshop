@@ -1,0 +1,15 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <form class="form_horizontal" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Сохранить" class="btn btn-primary col-lg-12">
+    </form>
+    <br>
+    <br>
+    <button class="btn btn-warning col-lg-12">
+        <a href="{% url 'adminapp:product_list' object.category.pk %}">назад</a>
+    </button>
+{% endblock %}
